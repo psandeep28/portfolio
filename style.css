@@ -1,6 +1,52 @@
+/* ===== Base Layout ===== */
+:root {
+    --color-accent: oklch(65% 50% 0); /* customize to your style */
+}
+
+html {
+    accent-color: var(--color-accent);
+}
+
 body {
-    /* Set line height to 1.5 times the font size
-         and use the OS’s UI font as the website font
-       */
-    font: 100%/1.5 system-ui;
-  }
+    max-width: 100ch;
+    margin-inline: auto;
+    padding: 1rem;
+    font-family: system-ui, sans-serif;
+    line-height: 1.6;
+}
+
+/* ===== Navigation ===== */
+nav {
+    display: flex;
+    border-bottom: 1px solid oklch(80% 3% 200);
+    margin-bottom: 1rem;
+    background-color: white; /* optional, looks clean */
+}
+
+/* Remove default list styles */
+nav ul,
+nav li {
+    display: contents;
+}
+
+/* Nav link styling */
+nav a {
+    flex: 1;
+    text-align: center;
+    text-decoration: none;
+    color: inherit;
+    padding: 0.5em;
+    transition: background-color 0.2s ease, border-bottom 0.2s ease;
+}
+
+/* Highlight the current page */
+nav a.current {
+    border-bottom: 0.4em solid oklch(80% 3% 200);
+    padding-bottom: 0.1em; /* to offset the border height */
+}
+
+/* Hover styles */
+nav a:hover {
+    border-bottom: 0.4em solid var(--color-accent);
+    background-color: oklch(from var(--color-accent) 95% 5% h);
+}
