@@ -16,7 +16,7 @@ let pages = [
 // Step 3.1 continued: Handle local vs GitHub Pages base path
 const BASE_PATH = (location.hostname === "localhost" || location.hostname === "127.0.0.1")
   ? "/"
-  : "/your-repo-name/"; // ← Change this to your actual GitHub repo name
+  : "/portfolio/"; // ← Change this to your actual GitHub repo name
 
 // Create <nav> and insert at top of body
 let nav = document.createElement("nav");
