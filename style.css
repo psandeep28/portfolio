@@ -1,99 +1,93 @@
-/* ===== Base Layout ===== */
+/* ===== Color Scheme Setup ===== */
 :root {
-    --color-accent: oklch(65% 50% 0); /* customize to your style */
-}
-
-html {
+    --color-accent: oklch(65% 50% 0);
+    color-scheme: light dark;
+  }
+  
+  html {
     accent-color: var(--color-accent);
-}
-
-body {
+  }
+  
+  body {
     max-width: 100ch;
     margin-inline: auto;
     padding: 1rem;
     font-family: system-ui, sans-serif;
     line-height: 1.6;
-}
-
-img {
-    max-width: 200px;  /* or try 150px, 250px — whatever looks right */
-    height: auto;      /* keeps the aspect ratio */
-    border-radius: 8px; /* optional: rounds the corners slightly */
+    background-color: canvas;
+    color: canvastext;
+  }
+  
+  img {
+    max-width: 200px;
+    height: auto;
+    border-radius: 8px;
     display: block;
-    margin: 1rem auto;  /* optional: centers the image */
-}
-
-
-/* ===== Navigation ===== */
-nav {
+    margin: 1rem auto;
+  }
+  
+  /* ===== Navigation ===== */
+  nav {
     display: flex;
-    border-bottom: 1px solid oklch(80% 3% 200);
+    gap: 1rem;
     margin-bottom: 1rem;
-    background-color: white; /* optional, looks clean */
-}
-
-/* Remove default list styles */
-nav ul,
-nav li {
+    padding-bottom: 0.5rem;
+    --border-color: oklch(50% 10% 200 / 40%);
+    border-bottom: 1px solid var(--border-color);
+  }
+  
+  nav ul,
+  nav li {
     display: contents;
-}
-
-/* Nav link styling */
-nav a {
+  }
+  
+  nav a {
     flex: 1;
     text-align: center;
     text-decoration: none;
     color: inherit;
     padding: 0.5em;
     transition: background-color 0.2s ease, border-bottom 0.2s ease;
-}
-
-/* Highlight the current page */
-nav a.current {
-    border-bottom: 0.4em solid oklch(80% 3% 200);
-    padding-bottom: 0.1em; /* to offset the border height */
-}
-
-/* Hover styles */
-nav a:hover {
+  }
+  
+  nav a.current {
+    border-bottom: 0.4em solid var(--border-color);
+    padding-bottom: 0.1em;
+  }
+  
+  nav a:hover {
     border-bottom: 0.4em solid var(--color-accent);
-    background-color: oklch(from var(--color-accent) 95% 5% h);
-}
-
-/* ===== Contact Form Styles ===== */
-
-/* Make form font match rest of the page */
-form input,
-form textarea,
-form button {
+    background-color: color-mix(in oklch, var(--color-accent), canvas 85%);
+  }
+  
+  /* ===== Contact Form Styles ===== */
+  form input,
+  form textarea,
+  form button {
     font: inherit;
-}
-
-/* Grid layout for the form */
-form {
+  }
+  
+  form {
     display: grid;
     grid-template-columns: auto 1fr;
     gap: 1em;
     margin-top: 2rem;
     align-items: center;
     max-width: 60ch;
-}
-
-/* Label styles for clean alignment */
-form label {
-    display: contents; /* removes label's box and lets inner text/input land in grid */
-}
-
-/* Make input fields stretch full width */
-form input,
-form textarea {
+  }
+  
+  form label {
+    display: contents;
+  }
+  
+  form input,
+  form textarea {
     width: 100%;
     box-sizing: border-box;
     padding: 0.5em;
-}
-
-/* Make submit button span the full row */
-form button {
+  }
+  
+  form button {
     grid-column: 1 / -1;
     padding: 0.75em;
     background-color: var(--color-accent);
@@ -103,20 +97,21 @@ form button {
     font-weight: bold;
     border-radius: 4px;
     transition: background-color 0.2s ease;
-}
-
-form button:hover {
+  }
+  
+  form button:hover {
     background-color: oklch(from var(--color-accent) 60% 40% h);
-}
-
-.projects {
+  }
+  
+  /* ===== Projects Page Styles ===== */
+  .projects {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(15em, 1fr));
     gap: 1.5em;
     margin-top: 2rem;
-}
-
-.projects article {
+  }
+  
+  .projects article {
     padding: 1em;
     border: 1px solid oklch(85% 3% 200 / 0.5);
     border-radius: 8px;
@@ -124,77 +119,90 @@ form button:hover {
     display: grid;
     grid-template-rows: subgrid;
     grid-row: span 3;
-}
-
-
-.projects h2 {
+  }
+  
+  .projects h2 {
     margin: 0;
-}
-
-/* Headings hierarchy */
-h1 {
-    font-size: 4rem;  /* 400% body text roughly */
+  }
+  
+  /* ===== Headings & Typography ===== */
+  h1 {
+    font-size: 4rem;
     margin-bottom: 1rem;
-}
-
-h1, h2, h3, h4, h5, h6 {
+  }
+  
+  h1, h2, h3, h4, h5, h6 {
     line-height: 1.1;
-    text-wrap: balance; /* smooths uneven lines */
-}
-
-/* ===== Resume Page Styling ===== */
-
-h1 {
+    text-wrap: balance;
+  }
+  
+  /* ===== Resume Page Styling ===== */
+  h1 {
     font-size: 3rem;
     margin-bottom: 1rem;
-}
-
-h3 {
+  }
+  
+  h3 {
     font-size: 1.5rem;
     margin-bottom: 0.5em;
     color: var(--color-accent);
     border-bottom: 2px solid oklch(85% 3% 200);
     padding-bottom: 0.25em;
-}
-
-h4 {
+  }
+  
+  h4 {
     font-size: 1.2rem;
     margin: 0.5em 0 0.25em;
-}
-
-section {
+  }
+  
+  section {
     margin-bottom: 2rem;
-}
-
-section article {
+  }
+  
+  section article {
     padding-left: 1em;
     border-left: 3px solid oklch(85% 3% 200);
     margin-bottom: 1em;
-}
-
-time {
+  }
+  
+  time {
     font-style: italic;
     font-size: 0.9rem;
     display: block;
     margin-bottom: 0.5em;
     color: #555;
-}
-
-ul {
+  }
+  
+  ul {
     list-style-type: disc;
     padding-left: 1.5em;
     margin-top: 0.5em;
-}
-
-ul li {
+  }
+  
+  ul li {
     margin-bottom: 0.25em;
-}
-
-section a {
+  }
+  
+  section a {
     color: var(--color-accent);
     text-decoration: none;
-}
-
-section a:hover {
+  }
+  
+  section a:hover {
     text-decoration: underline;
-}
+  }
+  
+  /* ===== Dark Mode Switcher ===== */
+  .color-scheme {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    font-size: 0.8rem;
+    font-family: inherit;
+    background-color: canvas;
+    color: canvastext;
+    padding: 0.3em 0.5em;
+    border-radius: 0.3em;
+    border: 1px solid var(--border-color);
+  }
+  
