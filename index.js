@@ -7,7 +7,7 @@ const projectsContainer = document.querySelector('.projects');
 renderProjects(latestProjects, projectsContainer, 'h2');
 
 // New GitHub data loading code
-const githubData = await fetchGitHubData('psandeep28'); // ← replace with your actual GitHub username
+const githubData = await fetchGitHubData('psandeep28'); 
 
 const profileStats = document.querySelector('#profile-stats');
 

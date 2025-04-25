@@ -206,3 +206,20 @@
     border: 1px solid var(--border-color);
   }
   
+  #profile-stats dl {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1em;
+    margin-top: 1rem;
+    background-color: canvas;
+    padding: 1rem;
+    border-radius: 8px;
+  }
+  
+  #profile-stats dt {
+    font-weight: bold;
+  }
+  
+  #profile-stats dd {
+    margin: 0;
+  }
