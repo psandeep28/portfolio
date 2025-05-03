@@ -229,42 +229,41 @@
     color: #666;
     margin-top: 0.25em;
   }
-
-  .container {
-    display: flex;
-    gap: 2em;
-    align-items: center;
-    margin: 2em 0;
-    flex-wrap: wrap; /* helps responsiveness */
-  }
-  
   #projects-pie-plot {
     max-width: 20em;
     flex-shrink: 0;
+  }
+
+  .container {
+    display: flex;
+    gap: 1.5rem;
+    align-items: flex-start;
+    margin-top: 1rem;
   }
   
   .legend {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(9em, 1fr));
-    gap: 1em;
-    list-style: none;
-    padding: 0;
-    margin: 0;
+    gap: 1rem;
     flex: 1;
+    padding: 1rem;
+    border: 1px solid #ccc;
+    background: #f9f9f9;
   }
   
   .legend-item {
     display: flex;
     align-items: center;
-    gap: 0.5em;
+    gap: 0.5rem;
   }
   
-  .legend-item .swatch {
+  .swatch {
     width: 1em;
     height: 1em;
-    border-radius: 3px;
     background-color: var(--color);
+    border-radius: 50%;
     display: inline-block;
   }
+  
   
   
