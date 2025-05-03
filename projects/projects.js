@@ -11,39 +11,37 @@ renderProjects(projects, projectsContainer, 'h2');
 const projectsTitle = document.querySelector('.projects-title');
 projectsTitle.textContent = `Projects (${projects.length})`;
 
-// PIE CHART SETUP
-let data = [1, 2, 3, 4, 5, 5];
+// ✅ PIE CHART: visualize number of projects by year
 
-// Arc generator (donut = set innerRadius > 0)
-let arcGenerator = d3.arc().innerRadius(0).outerRadius(50);
+// Count number of projects by year
+let yearCounts = {};
+for (let project of projects) {
+  const year = project.year;
+  yearCounts[year] = (yearCounts[year] || 0) + 1;
+}
 
-// Pie slice angle generator
-let sliceGenerator = d3.pie();
+// Convert to arrays for D3
+const years = Object.keys(yearCounts);
+const data = Object.values(yearCounts);
 
-// Use sliceGenerator to get start/end angles
-let arcData = sliceGenerator(data);
+// Arc generator
+const arcGenerator = d3.arc().innerRadius(0).outerRadius(50);
 
-// Map data to arc paths
-let arcs = arcData.map((d) => arcGenerator(d));
+// Pie slice generator
+const sliceGenerator = d3.pie();
 
-// Ordinal color scale using Tableau10 (10 safe & distinct colors)
-let colors = d3.scaleOrdinal(d3.schemeTableau10);
+// Generate angle data
+const arcData = sliceGenerator(data);
 
-// Draw pie chart into SVG
-arcs.forEach((arc, idx) => {
+// Color scale (more flexible than a fixed list)
+const colors = d3.scaleOrdinal(d3.schemeTableau10);
+
+// Draw each arc
+arcData.forEach((d, idx) => {
   d3.select('#projects-pie-plot')
     .append('path')
-    .attr('d', arc)
-    .attr('fill', colors(idx));
+    .attr('d', arcGenerator(d))
+    .attr('fill', colors(idx))
+    .attr('stroke', '#fff')
+    .attr('stroke-width', 0.5);
 });
-
-
-let arc = arcGenerator({
-  startAngle: 0,
-  endAngle: 2 * Math.PI,
-});
-
-d3.select('#projects-pie-plot')
-  .append('path')
-  .attr('d', arc)
-  .attr('fill', 'red');
