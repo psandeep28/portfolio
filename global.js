@@ -101,24 +101,24 @@ document.body.insertAdjacentHTML(
     }
   }
 
+
   export function renderProjects(projects, containerElement, headingLevel = 'h2') {
-    if (!containerElement) {
-      console.error('Invalid container element for rendering projects.');
-      return;
-    }
-  
-    containerElement.innerHTML = ''; // Clear previous content
+    containerElement.innerHTML = ''; // Clear existing content
   
     for (const project of projects) {
       const article = document.createElement('article');
       article.innerHTML = `
         <${headingLevel}>${project.title}</${headingLevel}>
         <img src="${project.image}" alt="${project.title}">
-        <p>${project.description}</p>
+        <div>
+          <p>${project.description}</p>
+          <p class="project-year">${project.year}</p>
+        </div>
       `;
       containerElement.appendChild(article);
     }
   }
+  
 
   export async function fetchGitHubData(username) {
     return fetchJSON(`https://api.github.com/users/${username}`);
