@@ -236,3 +236,31 @@
   
     overflow: visible;
   }
+
+  .legend {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(9em, 1fr));
+    gap: 1em;
+    padding: 1em;
+    border: 1px solid #ccc;
+    margin-block: 1em;
+    background: white;
+    border-radius: 0.5em;
+  }
+  
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5em;
+    font-size: 0.9em;
+  }
+  
+  .legend-item .swatch {
+    display: inline-block;
+    width: 1em;
+    height: 1em;
+    aspect-ratio: 1 / 1;
+    background: var(--color);
+    border-radius: 0.25em;
+  }
+  
