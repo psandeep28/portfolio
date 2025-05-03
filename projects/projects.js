@@ -11,8 +11,32 @@ renderProjects(projects, projectsContainer, 'h2');
 const projectsTitle = document.querySelector('.projects-title');
 projectsTitle.textContent = `Projects (${projects.length})`;
 
-// ✅ Use D3 to draw a full red circle via arc
+// PIE CHART SETUP
+let data = [1, 2, 3, 4, 5, 5];
+
+// Arc generator (donut = set innerRadius > 0)
 let arcGenerator = d3.arc().innerRadius(0).outerRadius(50);
+
+// Pie slice angle generator
+let sliceGenerator = d3.pie();
+
+// Use sliceGenerator to get start/end angles
+let arcData = sliceGenerator(data);
+
+// Map data to arc paths
+let arcs = arcData.map((d) => arcGenerator(d));
+
+// Ordinal color scale using Tableau10 (10 safe & distinct colors)
+let colors = d3.scaleOrdinal(d3.schemeTableau10);
+
+// Draw pie chart into SVG
+arcs.forEach((arc, idx) => {
+  d3.select('#projects-pie-plot')
+    .append('path')
+    .attr('d', arc)
+    .attr('fill', colors(idx));
+});
+
 
 let arc = arcGenerator({
   startAngle: 0,
