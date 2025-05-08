@@ -10,7 +10,8 @@ let pages = [
   { url: "projects/", title: "Projects" },
   { url: "contact/", title: "Contact" },
   { url: "resume.html", title: "Resume" },
-  { url: "https://github.com/psandeep28", title: "GitHub" }
+  { url: "https://github.com/psandeep28", title: "GitHub" },
+  { url: "Meta/", title: "Meta"}
 ];
 
 // Step 3.1 continued: Handle local vs GitHub Pages base path
