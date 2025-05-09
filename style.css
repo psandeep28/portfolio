@@ -317,4 +317,20 @@ path.selected {
   text-align: left;
 }
 
+.gridlines line {
+  stroke: lightgray;
+  stroke-opacity: 0.5;
+  shape-rendering: crispEdges;
+}
+
+.gridlines path {
+  display: none;
+}
+
+.dots circle:hover {
+  fill: orange;
+  r: 6;
+  cursor: pointer;
+}
+
   
