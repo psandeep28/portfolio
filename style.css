@@ -292,7 +292,8 @@ path.selected {
 }
 
 .stats {
-  background: #f9f9f9;
+  background: var(--stats-bg, #f9f9f9);
+  color: var(--stats-fg, canvastext);
   padding: 1em;
   border-radius: 0.5em;
   max-width: 500px;
@@ -352,4 +353,11 @@ svg .gridlines line {
 
 svg text {
   fill: currentColor;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --stats-bg: #1e1e1e;
+    --stats-fg: #eee;
+  }
 }
