@@ -332,5 +332,24 @@ path.selected {
   r: 6;
   cursor: pointer;
 }
-
   
+/* Chart styling */
+svg {
+  font-family: sans-serif;
+  font-size: 12px;
+  color-scheme: light dark;
+}
+
+svg .tick line,
+svg .domain {
+  stroke: var(--tick-color, currentColor);
+}
+
+svg .gridlines line {
+  stroke: var(--grid-color, currentColor);
+  stroke-opacity: 0.2;
+}
+
+svg text {
+  fill: currentColor;
+}
