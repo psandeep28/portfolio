@@ -80,7 +80,6 @@ function renderScatterPlot(data, commits) {
     .attr("viewBox", `0 0 ${width} ${height}`)
     .style("overflow", "visible");
 
-  // Scales
   const xScale = d3.scaleTime()
     .domain(d3.extent(commits, (d) => d.datetime))
     .range([usableArea.left, usableArea.right])
@@ -90,17 +89,14 @@ function renderScatterPlot(data, commits) {
     .domain([0, 24])
     .range([usableArea.bottom, usableArea.top]);
 
-  // ✅ Gridlines BEFORE the axes
+  const [minLines, maxLines] = d3.extent(commits, (d) => d.totalLines);
+  const rScale = d3.scaleSqrt().domain([minLines, maxLines]).range([2, 30]);
+
   svg.append('g')
     .attr('class', 'gridlines')
     .attr('transform', `translate(${usableArea.left}, 0)`)
     .call(d3.axisLeft(yScale).tickFormat('').tickSize(-usableArea.width));
 
-  // ✅ Dots
-  const dots = svg.append("g").attr("class", "dots");
-
-
-  // ✅ Axes
   const xAxis = d3.axisBottom(xScale);
   const yAxis = d3.axisLeft(yScale)
     .tickFormat((d) => String(d % 24).padStart(2, '0') + ':00');
@@ -113,26 +109,32 @@ function renderScatterPlot(data, commits) {
     .attr("transform", `translate(${usableArea.left}, 0)`)
     .call(yAxis);
 
-    dots
-  .selectAll('circle')
-  .data(commits)
-  .join('circle')
-  .attr('cx', (d) => xScale(d.datetime))
-  .attr('cy', (d) => yScale(d.hourFrac))
-  .attr('r', 5)
-  .attr('fill', 'steelblue')
-  .on('mouseenter', (event, commit) => {
-    renderTooltipContent(commit);
-    updateTooltipVisibility(true);
-    updateTooltipPosition(event);
-  })
-  .on('mousemove', updateTooltipPosition)
-  .on('mouseleave', () => {
-    updateTooltipVisibility(false);
-  });
+  const sortedCommits = d3.sort(commits, (d) => -d.totalLines);
 
+  const dots = svg.append("g").attr("class", "dots");
+
+  dots.selectAll("circle")
+    .data(sortedCommits)
+    .join("circle")
+    .attr("cx", (d) => xScale(d.datetime))
+    .attr("cy", (d) => yScale(d.hourFrac))
+    .attr("r", (d) => rScale(d.totalLines))
+    .attr("fill", "steelblue")
+    .style("fill-opacity", 0.7)
+    .on("mouseenter", (event, commit) => {
+      d3.select(event.currentTarget).style("fill-opacity", 1);
+      renderTooltipContent(commit);
+      updateTooltipVisibility(true);
+      updateTooltipPosition(event);
+    })
+    .on("mousemove", updateTooltipPosition)
+    .on("mouseleave", (event) => {
+      d3.select(event.currentTarget).style("fill-opacity", 0.7);
+      updateTooltipVisibility(false);
+    });
 }
 
+// ===== Tooltip helpers below =====
 function renderTooltipContent(commit) {
   document.getElementById('commit-link').href = commit.url;
   document.getElementById('commit-link').textContent = commit.id;
@@ -152,11 +154,8 @@ function updateTooltipPosition(event) {
   tooltip.style.top = `${event.clientY + 10}px`;
 }
 
-
-
-
+// ===== Run everything =====
 let data = await loadData();
 let commits = processCommits(data);
-console.log(commits);
 renderCommitInfo(data, commits);
 renderScatterPlot(data, commits);
