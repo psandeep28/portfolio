@@ -355,9 +355,46 @@ svg text {
   fill: currentColor;
 }
 
+.tooltip {
+  position: fixed;
+  background: rgba(255, 255, 255, 0.9);
+  color: black;
+  border: 1px solid #ccc;
+  border-radius: 0.4em;
+  padding: 0.75em;
+  font-size: 0.9rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  pointer-events: none;
+  transition: opacity 0.4s ease;
+  z-index: 999;
+}
+
+.tooltip[hidden] {
+  opacity: 0;
+  visibility: hidden;
+}
+
+.tooltip dt {
+  font-weight: bold;
+  margin-top: 0.3em;
+}
+
+.tooltip dd {
+  margin: 0 0 0.3em 0;
+}
+
+
 @media (prefers-color-scheme: dark) {
   :root {
     --stats-bg: #1e1e1e;
     --stats-fg: #eee;
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  .tooltip {
+    background: rgba(40, 40, 40, 0.95);
+    color: white;
+    border: 1px solid #444;
   }
 }
