@@ -84,36 +84,31 @@ function isCommitSelected(selection, commit) {
 }
 
 function renderSelectionCount(selection, commits) {
-  const selectedCommits = selection
+  const selected = selection
     ? commits.filter((d) => isCommitSelected(selection, d))
     : [];
-  const countElement = document.querySelector('#selection-count');
-  countElement.textContent = `${selectedCommits.length || 'No'} commits selected`;
-  return selectedCommits;
+  const p = document.getElementById('selection-count');
+  p.textContent = `${selected.length || 'No'} commits selected`;
+  return selected;
 }
 
 function renderLanguageBreakdown(selection, commits) {
-  const selectedCommits = selection
+  const selected = selection
     ? commits.filter((d) => isCommitSelected(selection, d))
     : [];
   const container = document.getElementById('language-breakdown');
-  if (selectedCommits.length === 0) {
+  if (selected.length === 0) {
     container.innerHTML = '';
     return;
   }
-  const lines = selectedCommits.flatMap((d) => d.lines);
-  const breakdown = d3.rollup(
-    lines,
-    (v) => v.length,
-    (d) => d.type,
-  );
+  const lines = selected.flatMap((d) => d.lines);
+  const breakdown = d3.rollup(lines, v => v.length, d => d.type);
   container.innerHTML = '';
   for (const [lang, count] of breakdown) {
-    const proportion = count / lines.length;
-    const formatted = d3.format('.1~%')(proportion);
+    const prop = count / lines.length;
     container.innerHTML += `
       <dt>${lang}</dt>
-      <dd>${count} lines (${formatted})</dd>
+      <dd>${count} lines (${d3.format('.1~%')(prop)})</dd>
     `;
   }
 }
@@ -131,8 +126,7 @@ function renderScatterPlot(data, commits) {
     height: height - margin.top - margin.bottom,
   };
 
-  const svg = d3
-    .select('#chart')
+  const svg = d3.select('#chart')
     .append('svg')
     .attr('viewBox', `0 0 ${width} ${height}`)
     .style('overflow', 'visible');
@@ -146,7 +140,7 @@ function renderScatterPlot(data, commits) {
     .domain([0, 24])
     .range([usableArea.bottom, usableArea.top]);
 
-  const [minLines, maxLines] = d3.extent(commits, (d) => d.totalLines);
+  const [minLines, maxLines] = d3.extent(commits, d => d.totalLines);
   const rScale = d3.scaleSqrt().domain([minLines, maxLines]).range([2, 30]);
 
   svg.append('g')
@@ -162,20 +156,20 @@ function renderScatterPlot(data, commits) {
     .attr('transform', `translate(${usableArea.left}, 0)`)
     .call(d3.axisLeft(yScale).tickFormat(d => String(d % 24).padStart(2, '0') + ':00'));
 
-  const sortedCommits = d3.sort(commits, (d) => -d.totalLines);
+  const sorted = d3.sort(commits, d => -d.totalLines);
   const dots = svg.append('g').attr('class', 'dots');
 
   dots.selectAll('circle')
-    .data(sortedCommits)
+    .data(sorted)
     .join('circle')
-    .attr('cx', (d) => xScale(d.datetime))
-    .attr('cy', (d) => yScale(d.hourFrac))
-    .attr('r', (d) => rScale(d.totalLines))
+    .attr('cx', d => xScale(d.datetime))
+    .attr('cy', d => yScale(d.hourFrac))
+    .attr('r', d => rScale(d.totalLines))
     .attr('fill', 'steelblue')
     .style('fill-opacity', 0.7)
-    .on('mouseenter', (event, commit) => {
+    .on('mouseenter', (event, d) => {
       d3.select(event.currentTarget).style('fill-opacity', 1);
-      renderTooltipContent(commit);
+      renderTooltipContent(d);
       updateTooltipVisibility(true);
       updateTooltipPosition(event);
     })
@@ -185,15 +179,13 @@ function renderScatterPlot(data, commits) {
       updateTooltipVisibility(false);
     });
 
-  svg.call(
-    d3.brush()
-      .on('start brush end', function (event) {
-        const selection = event.selection;
-        d3.selectAll('circle').classed('selected', (d) => isCommitSelected(selection, d));
-        renderSelectionCount(selection, commits);
-        renderLanguageBreakdown(selection, commits);
-      })
-  );
+  svg.call(d3.brush().on('start brush end', (event) => {
+    const selection = event.selection;
+    d3.selectAll('circle').classed('selected', (d) => isCommitSelected(selection, d));
+    renderSelectionCount(selection, commits);
+    renderLanguageBreakdown(selection, commits);
+  }));
+
   svg.selectAll('.dots, .overlay ~ *').raise();
 }
 
