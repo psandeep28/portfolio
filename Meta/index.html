@@ -2,13 +2,11 @@
   <h1>Meta</h1>
   <p>Stats about the code of this website.</p>
 
-  <!-- Slider & commit time display -->
-  <div style="display: flex; align-items: baseline; gap: 1rem; margin-bottom: 1rem;">
-    <label for="commit-progress" style="flex: 1;">
-      Show commits until:
-      <input type="range" id="commit-progress" min="0" max="100" value="100" />
-    </label>
-    <time id="commit-time" style="margin-left: auto;"></time>
+  <!-- ✅ Keep only this version of the slider UI -->
+  <div class="commit-filter">
+    <label for="commit-progress">Show commits until:</label>
+    <input type="range" id="commit-progress" min="0" max="100" value="100" />
+    <time id="commit-time"></time>
   </div>
 
   <div id="stats"></div>

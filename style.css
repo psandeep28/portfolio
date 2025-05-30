@@ -411,3 +411,28 @@ circle.selected {
   stroke: black;
   stroke-width: 1px;
 }
+
+#stats dl.stats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2em;
+  margin: 1em 0;
+  padding: 0;
+}
+#stats dl.stats dt {
+  font-weight: bold;
+}
+#stats dl.stats dd {
+  margin: 0;
+}
+
+.commit-filter {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin: 1.5rem 0;
+}
+.commit-filter time {
+  margin-left: auto;
+  white-space: nowrap;
+}
