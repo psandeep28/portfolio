@@ -97,6 +97,80 @@ function onTimeSliderChange() {
   updateFileDisplay(filteredCommits);
 }
 
+function renderScatterPlot(data, commits) {
+  const width = 1000, height = 600;
+  const margin = { top: 10, right: 10, bottom: 30, left: 50 };
+  const usable = {
+    top: margin.top,
+    right: width - margin.right,
+    bottom: height - margin.bottom,
+    left: margin.left,
+    width: width - margin.left - margin.right,
+    height: height - margin.top - margin.bottom
+  };
+
+  const svg = d3.select('#chart').append('svg')
+    .attr('viewBox', `0 0 ${width} ${height}`)
+    .style('overflow', 'visible');
+
+  xScale = d3.scaleTime()
+    .domain(d3.extent(commits, d => d.datetime))
+    .range([usable.left, usable.right])
+    .nice();
+
+  yScale = d3.scaleLinear().domain([0, 24]).range([usable.bottom, usable.top]);
+
+  svg.append('g')
+    .attr('class', 'gridlines')
+    .attr('transform', `translate(${usable.left}, 0)`)
+    .call(d3.axisLeft(yScale).tickFormat('').tickSize(-usable.width));
+
+  svg.append('g')
+    .attr('class', 'x-axis')
+    .attr('transform', `translate(0, ${usable.bottom})`)
+    .call(d3.axisBottom(xScale));
+
+  svg.append('g')
+    .attr('class', 'y-axis')
+    .attr('transform', `translate(${usable.left}, 0)`)
+    .call(d3.axisLeft(yScale).tickFormat(d => `${String(d).padStart(2, '0')}:00`));
+
+  const sorted = d3.sort(commits, d => -d.totalLines);
+  const rScale = d3.scaleSqrt().domain(d3.extent(commits, d => d.totalLines)).range([2, 30]);
+
+  const dots = svg.append('g').attr('class', 'dots');
+
+  dots.selectAll('circle')
+    .data(sorted, d => d.id)
+    .join('circle')
+    .attr('cx', d => xScale(d.datetime))
+    .attr('cy', d => yScale(d.hourFrac))
+    .attr('r', d => rScale(d.totalLines))
+    .attr('fill', 'steelblue')
+    .style('fill-opacity', 0.7)
+    .on('mouseenter', (event, d) => {
+      d3.select(event.currentTarget).style('fill-opacity', 1);
+      renderTooltipContent(d);
+      updateTooltipVisibility(true);
+      updateTooltipPosition(event);
+    })
+    .on('mousemove', updateTooltipPosition)
+    .on('mouseleave', (event) => {
+      d3.select(event.currentTarget).style('fill-opacity', 0.7);
+      updateTooltipVisibility(false);
+    });
+
+  svg.call(d3.brush().on('start brush end', (event) => {
+    const selection = event.selection;
+    d3.selectAll('circle').classed('selected', d => isCommitSelected(selection, d));
+    renderSelectionCount(selection, commits);
+    renderLanguageBreakdown(selection, commits);
+  }));
+
+  svg.selectAll('.dots, .overlay ~ *').raise();
+}
+
+
 const data = await loadData();
 const commits = processCommits(data);
 
