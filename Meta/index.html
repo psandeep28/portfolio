@@ -17,11 +17,30 @@
     <input type="range" id="commit-progress" min="0" max="100" value="100" />
     <time id="slider-time"></time>
   </div>
-  
+
+  <!-- Scrollytelling container -->
+  <div id="scrolly-1">
+    <div id="scatter-story"></div>
+    <div id="scatter-plot">
+      <div id="chart"></div>
+      <p id="selection-count">No commits selected</p>
+      <table id="language-breakdown" class="stats">
+        <thead>
+          <tr>
+            <th>Language</th>
+            <th>Lines</th>
+            <th>Percent</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- File breakdown -->
   <dl id="files"></dl>
 
-
-  <!-- Stats -->
+  <!-- Commit stats -->
   <div id="stats"></div>
 
   <h2>Commits by time of day</h2>
@@ -40,25 +59,8 @@
     <dd id="commit-lines"></dd>
   </dl>
 
-  <!-- Chart -->
-  <div id="chart"></div>
-  <p id="selection-count">No commits selected</p>
-
-  <!-- Language Breakdown -->
-  <table id="language-breakdown" class="stats">
-    <thead>
-      <tr>
-        <th>Language</th>
-        <th>Lines</th>
-        <th>Percent</th>
-      </tr>
-    </thead>
-    <tbody></tbody>
-  </table>
-
   <!-- Scripts -->
   <script type="module" src="./main.js"></script>
   <script type="module" src="../global.js"></script>
-  
 </body>
 </html>

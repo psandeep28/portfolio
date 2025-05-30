@@ -471,3 +471,22 @@ circle.selected {
   background: steelblue;
   border-radius: 50%;
 }
+
+#scrolly-1 {
+  display: flex;
+  gap: 1rem;
+  position: relative;
+}
+#scatter-story {
+  flex: 1;
+}
+#scatter-plot {
+  position: sticky;
+  top: 0;
+  height: 50vh;
+  flex: 1;
+}
+.step {
+  padding-bottom: 40vh; /* so each step takes some scroll space */
+}
+
