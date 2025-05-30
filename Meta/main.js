@@ -243,6 +243,22 @@ renderScatterPlot(data, commits);
 
 const slider = document.getElementById('commit-progress');
 if (slider) {
-  slider.addEventListener('input', onTimeSliderChange);
-  onTimeSliderChange();
+  slider.addEventListener('input', () => {
+    const timeElem = document.getElementById('slider-time');
+    commitProgress = +slider.value;
+    commitMaxTime = timeScale.invert(commitProgress);
+    filteredCommits = commits.filter(d => d.datetime <= commitMaxTime);
+    timeElem.textContent = commitMaxTime.toLocaleString(undefined, {
+      dateStyle: 'long',
+      timeStyle: 'short'
+    });
+
+    updateScatterPlot(data, filteredCommits);
+    document.querySelector('#stats').innerHTML = '';
+    renderCommitInfo(data, filteredCommits);
+  });
+
+  // Simulate initial load
+  slider.dispatchEvent(new Event('input'));
 }
+

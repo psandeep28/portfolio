@@ -1,16 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Meta</title>
+  <link rel="stylesheet" href="../style.css" />
+</head>
+
 <body>
   <h1>Meta</h1>
   <p>Stats about the code of this website.</p>
 
+  <!-- Slider UI -->
   <div class="commit-filter">
     <label for="commit-progress">Show commits until:</label>
     <input type="range" id="commit-progress" min="0" max="100" value="100" />
     <time id="slider-time"></time>
   </div>
 
+  <!-- Stats -->
   <div id="stats"></div>
 
   <h2>Commits by time of day</h2>
+
+  <!-- Tooltip -->
   <dl id="commit-tooltip" class="info tooltip" hidden>
     <dt>Commit</dt>
     <dd><a href="" id="commit-link" target="_blank" rel="noopener noreferrer"></a></dd>
@@ -24,9 +37,11 @@
     <dd id="commit-lines"></dd>
   </dl>
 
+  <!-- Chart -->
   <div id="chart"></div>
   <p id="selection-count">No commits selected</p>
 
+  <!-- Language Breakdown -->
   <table id="language-breakdown" class="stats">
     <thead>
       <tr>
@@ -38,6 +53,8 @@
     <tbody></tbody>
   </table>
 
+  <!-- Scripts -->
   <script type="module" src="meta.js"></script>
   <script type="module" src="../global.js"></script>
 </body>
+</html>
