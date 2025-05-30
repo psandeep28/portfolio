@@ -1,15 +1,15 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Meta</title>
-  <link rel="stylesheet" href="../style.css" />
-</head>
-
 <body>
   <h1>Meta</h1>
   <p>Stats about the code of this website.</p>
+
+  <!-- Slider & commit time display -->
+  <div style="display: flex; align-items: baseline; gap: 1rem; margin-bottom: 1rem;">
+    <label for="commit-progress" style="flex: 1;">
+      Show commits until:
+      <input type="range" id="commit-progress" min="0" max="100" value="100" />
+    </label>
+    <time id="commit-time" style="margin-left: auto;"></time>
+  </div>
 
   <div id="stats"></div>
   <h2>Commits by time of day</h2>
@@ -44,4 +44,3 @@
   <script type="module" src="main.js"></script>
   <script type="module" src="../global.js"></script>
 </body>
-</html>
