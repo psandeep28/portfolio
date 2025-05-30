@@ -248,6 +248,10 @@ if (slider) {
     commitProgress = +slider.value;
     commitMaxTime = timeScale.invert(commitProgress);
     filteredCommits = commits.filter(d => d.datetime <= commitMaxTime);
+
+    // Fallback to full commits if none in range
+    if (filteredCommits.length === 0) filteredCommits = commits;
+
     timeElem.textContent = commitMaxTime.toLocaleString(undefined, {
       dateStyle: 'long',
       timeStyle: 'short'
@@ -258,7 +262,11 @@ if (slider) {
     renderCommitInfo(data, filteredCommits);
   });
 
-  // Simulate initial load
+  // ✅ Force slider to max position and trigger initial render
+  slider.value = 100;
   slider.dispatchEvent(new Event('input'));
 }
+
+console.log('Filtered commits:', filteredCommits.length, filteredCommits);
+
 
