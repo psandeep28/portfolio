@@ -272,14 +272,22 @@ const story = d3.select('#scatter-story')
     } files. Then I looked over all I had made, and I saw that it was very good.
   `);
 
+// Step 4: Generate commit text for files
+d3.select('#file-story')
+.selectAll('.step')
+.data(commits)
+.join('div')
+.attr('class', 'step')
+.html((d) => `
+  After this commit on ${d.datetime.toLocaleString()}, here’s how the files changed...
+`);
+
+
 // Step 3.3: Scrollama to link story to visualization
 function onStepEnter(response) {
   const date = response.element.__data__.datetime;
   commitMaxTime = date;
   filteredCommits = commits.filter(d => d.datetime <= commitMaxTime);
-  document.getElementById('slider-time').textContent = commitMaxTime.toLocaleString(undefined, {
-    dateStyle: 'long', timeStyle: 'short'
-  });
   updateScatterPlot(data, filteredCommits);
   updateFileDisplay(filteredCommits);
   document.querySelector('#stats').innerHTML = '';
@@ -306,13 +314,3 @@ scroller2
     const filtered = commits.filter(d => d.datetime <= date);
     updateFileDisplay(filtered);
   });
-
-// Step 4: Generate commit text for files
-d3.select('#file-story')
-  .selectAll('.step')
-  .data(commits)
-  .join('div')
-  .attr('class', 'step')
-  .html((d) => `
-    After this commit on ${d.datetime.toLocaleString()}, here’s how the files changed...
-  `);
