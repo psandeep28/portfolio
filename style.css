@@ -493,3 +493,22 @@ circle.selected {
   padding-bottom: 40vh; /* so each step takes some scroll space */
 }
 
+#scrolly-1,
+#scrolly-2 {
+  position: relative;
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 5rem;
+}
+
+#scatter-plot,
+#file-plot {
+  position: sticky;
+  top: 0;
+  height: 50vh;
+}
+
+#scatter-story .step,
+#file-story .step {
+  padding-bottom: 80vh;
+}

@@ -11,20 +11,10 @@
   <h1>Meta</h1>
   <p>Stats about the code of this website.</p>
 
-  <!-- Slider UI -->
-  <div class="commit-filter">
-    <label for="commit-progress">Show commits until:</label>
-    <input type="range" id="commit-progress" min="0" max="100" value="100" />
-    <time id="slider-time"></time>
-  </div>
-
-  <!-- Commit stats summary -->
+  <!-- Stats summary -->
   <div id="stats"></div>
 
-  <!-- File unit visualization -->
-  <dl id="files"></dl>
-
-  <!-- Scrollytelling container -->
+  <!-- Scrollytelling section: scatter plot -->
   <div id="scrolly-1">
     <div id="scatter-story"></div>
     <div id="scatter-plot">
@@ -43,6 +33,14 @@
     </div>
   </div>
 
+  <!-- Scrollytelling section: file unit visualization -->
+  <div id="scrolly-2">
+    <div id="file-story"></div>
+    <div id="file-plot">
+      <dl id="files"></dl>
+    </div>
+  </div>
+
   <!-- Tooltip -->
   <dl id="commit-tooltip" class="info tooltip" hidden>
     <dt>Commit</dt>
@@ -50,13 +48,12 @@
     <dt>Date</dt>
     <dd id="commit-date"></dd>
     <dt>Time</dt>
-    <dd id="commit-time"></dd> <!-- FIXED ID -->
+    <dd id="tooltip-time"></dd>
     <dt>Author</dt>
     <dd id="commit-author"></dd>
     <dt>Lines edited</dt>
     <dd id="commit-lines"></dd>
   </dl>
-  
 
   <!-- Scripts -->
   <script type="module" src="./main.js"></script>

@@ -293,3 +293,26 @@ scroller
     step: '#scrolly-1 .step',
   })
   .onStepEnter(onStepEnter);
+
+  // Step 4: Scrollama for file display
+const scroller2 = scrollama();
+scroller2
+  .setup({
+    container: '#scrolly-2',
+    step: '#scrolly-2 .step',
+  })
+  .onStepEnter((response) => {
+    const date = response.element.__data__.datetime;
+    const filtered = commits.filter(d => d.datetime <= date);
+    updateFileDisplay(filtered);
+  });
+
+// Step 4: Generate commit text for files
+d3.select('#file-story')
+  .selectAll('.step')
+  .data(commits)
+  .join('div')
+  .attr('class', 'step')
+  .html((d) => `
+    After this commit on ${d.datetime.toLocaleString()}, here’s how the files changed...
+  `);
