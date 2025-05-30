@@ -233,7 +233,37 @@ function onTimeSliderChange() {
   updateFileDisplay(filteredCommits);
 }
 
+function updateScatterPlot(data, commits) {
+  const svg = d3.select('#chart svg');
 
+  xScale.domain(d3.extent(commits, d => d.datetime)).nice();
+  svg.select('g.x-axis').call(d3.axisBottom(xScale));
+
+  const sorted = d3.sort(commits, d => -d.totalLines);
+  const [minLines, maxLines] = d3.extent(commits, d => d.totalLines);
+  const rScale = d3.scaleSqrt().domain([minLines, maxLines]).range([2, 30]);
+
+  const dots = svg.select('g.dots');
+  dots.selectAll('circle')
+    .data(sorted, d => d.id)
+    .join('circle')
+    .attr('cx', d => xScale(d.datetime))
+    .attr('cy', d => yScale(d.hourFrac))
+    .attr('r', d => rScale(d.totalLines))
+    .attr('fill', 'steelblue')
+    .style('fill-opacity', 0.7)
+    .on('mouseenter', (event, d) => {
+      d3.select(event.currentTarget).style('fill-opacity', 1);
+      renderTooltipContent(d);
+      updateTooltipVisibility(true);
+      updateTooltipPosition(event);
+    })
+    .on('mousemove', updateTooltipPosition)
+    .on('mouseleave', (event) => {
+      d3.select(event.currentTarget).style('fill-opacity', 0.7);
+      updateTooltipVisibility(false);
+    });
+}
 
 const data = await loadData();
 const commits = processCommits(data);
