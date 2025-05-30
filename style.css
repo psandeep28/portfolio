@@ -482,10 +482,13 @@ circle.selected {
 }
 #scatter-plot {
   position: sticky;
-  top: 0;
-  height: 50vh;
-  flex: 1;
+  top: 10vh; /* makes it not stick to very top */
+  height: 85vh; /* ensures it doesn't exceed viewport */
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
 }
+
 .step {
   padding-bottom: 40vh; /* so each step takes some scroll space */
 }
