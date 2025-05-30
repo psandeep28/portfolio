@@ -58,6 +58,7 @@ function renderCommitInfo(data, commits) {
 
 function updateFileDisplay(filteredCommits) {
   let lines = filteredCommits.flatMap(d => d.lines);
+  d3.select('#files').selectAll('*').remove();
   let files = d3.groups(lines, d => d.file)
     .map(([name, lines]) => ({ name, lines }))
     .sort((a, b) => b.lines.length - a.lines.length);
@@ -227,8 +228,12 @@ function onTimeSliderChange() {
   document.querySelector('#stats').innerHTML = '';
   renderCommitInfo(data, filteredCommits);
   updateScatterPlot(data, filteredCommits);
+
+  // 👇 THIS is the key line you're probably missing
   updateFileDisplay(filteredCommits);
 }
+
+
 
 const data = await loadData();
 const commits = processCommits(data);
