@@ -488,7 +488,6 @@ circle.selected {
   flex-direction: column;
   justify-content: flex-start;
 }
-
 .step {
   padding-bottom: 40vh; /* so each step takes some scroll space */
 }
@@ -499,6 +498,7 @@ circle.selected {
   display: flex;
   gap: 1rem;
   margin-bottom: 5rem;
+  align-items: flex-start; /* helps with vertical alignment */
 }
 
 #scatter-plot,

@@ -173,7 +173,8 @@ function updateScatterPlot(data, commits) {
 }
 
 function renderScatterPlot(data, commits) {
-  const width = 1000, height = 600;
+  const width = 1200;  // previously 1000
+  const height = 700;  // previously 600  
   const margin = { top: 30, right: 10, bottom: 30, left: 50 };
   const usable = {
     top: margin.top,
